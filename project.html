@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Differential Power</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #fff;
+            background: linear-gradient(180deg, #000000 0%, #1a1a1a 50%, #0d0d0d 100%);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #000000;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 2px solid #EB673A;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-logo {
+            height: 50px;
+            width: auto;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #EB673A;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #EB673A;
+        }
+
+        /* Main Content */
+        .main {
+            width: min(1200px, calc(100% - 48px));
+            margin: 0 auto;
+            padding: 120px 24px 60px;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .page-header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 72px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 0 4px 30px rgba(235, 103, 58, 0.3);
+        }
+
+        .page-header h1 span {
+            background: linear-gradient(135deg, #EB673A 0%, #FF8C42 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            color: #CCCCCC;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 60px;
+            margin-bottom: 80px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .tab-button {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 15px 40px;
+            border: 2px solid rgba(235, 103, 58, 0.5);
+            background: transparent;
+            color: #CCCCCC;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .tab-button:hover {
+            border-color: #EB673A;
+            color: #EB673A;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #EB673A 0%, #FF8C42 100%);
+            border-color: #EB673A;
+            color: white;
+            box-shadow: 0 8px 25px rgba(235, 103, 58, 0.4);
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* Hero Section with DPx Law */
+        .hero-section {
+            position: relative;
+            margin-bottom: 100px;
+            animation: scaleIn 0.8s ease-out 0.2s both;
+        }
+
+        .hero-container {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .hero {
+            width: 100%;
+            position: relative;
+        }
+
+        .hero img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 16px;
+            box-shadow: 0 30px 80px rgba(235, 103, 58, 0.25), inset 0 0 40px rgba(235, 103, 58, 0.1);
+            border: 1px solid rgba(235, 103, 58, 0.2);
+            transition: none;
+            cursor: pointer;
+        }
+
+        .hero-description {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            color: #CCCCCC;
+            margin-bottom: 50px;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 56px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-align: left;
+            text-shadow: 0 4px 20px rgba(235, 103, 58, 0.2);
+            animation: fadeInUp 0.8s ease-out;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .hero-section-title span {
+            background: linear-gradient(135deg, #EB673A 0%, #FF8C42 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, #EB673A 0%, #FF8C42 100%);
+            border-radius: 2px;
+            box-shadow: 0 0 15px rgba(235, 103, 58, 0.6);
+        }
+
+        .hotspot {
+            position: absolute;
+            width: var(--size);
+            height: var(--size);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            transform: translate(-50%, -50%);
+            text-decoration: none;
+        }
+
+        .hotspot:hover {
+            background: rgba(235, 103, 58, 0.4);
+            border: 2px solid #EB673A;
+            box-shadow: 0 0 20px rgba(235, 103, 58, 0.8);
+        }
+
+        .hotspot::before {
+            content: "";
+            position: absolute;
+            top: 20px;
+            left: -140px;
+            width: 170px;
+            height: 170px;
+            background-color: transparent;
+            background-image: var(--bg-image);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 20px rgba(235, 103, 58, 0.9));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .hotspot:hover::before {
+            opacity: 1;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 56px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 4px 20px rgba(235, 103, 58, 0.2);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, #EB673A 0%, #FF8C42 100%);
+            border-radius: 2px;
+            box-shadow: 0 0 15px rgba(235, 103, 58, 0.6);
+        }
+
+        .section-title span {
+            background: linear-gradient(135deg, #EB673A 0%, #FF8C42 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Prototypes Section */
+        .prototypes-section {
+            margin-top: 120px;
+        }
+
+        .prototypes-header {
+            margin-bottom: 80px;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .prototype-list {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        .prototype {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 50px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(235, 103, 58, 0.2);
+            border-radius: 16px;
+            padding: 50px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .prototype:hover {
+            background: rgba(235, 103, 58, 0.1);
+            box-shadow: 0 20px 60px rgba(235, 103, 58, 0.3);
+            transform: translateY(-10px);
+            border-color: rgba(235, 103, 58, 0.4);
+        }
+
+        .prototype:nth-child(even) {
+            grid-template-columns: 1.2fr 1fr;
+        }
+
+        .prototype-media {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .prototype-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 12px;
+            background: transparent;
+            filter: drop-shadow(0 8px 20px rgba(235, 103, 58, 0.2));
+            transition: transform 0.4s ease;
+        }
+
+        .prototype-content h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #ffffff;
+            background: linear-gradient(135deg, #EB673A 0%, #FF8C42 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 10px rgba(235, 103, 58, 0.1);
+        }
+
+        .prototype-content p {
+            font-size: 16px;
+            color: #CCCCCC;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .prototype-content ul {
+            padding-left: 24px;
+            list-style: none;
+        }
+
+        .prototype-content ul li {
+            color: #CCCCCC;
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .prototype-content ul li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #EB673A;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        /* Alternate layout: image right on even rows */
+        .prototype:nth-child(even) .prototype-media {
+            order: 2;
+        }
+
+        .prototype:nth-child(even) .prototype-content {
+            order: 1;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #000000;
+            color: white;
+            padding: 80px 50px 30px;
+            border-top: 2px solid rgba(235, 103, 58, 0.5);
+            margin-top: 120px;
+            box-shadow: 0 -4px 30px rgba(235, 103, 58, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-section h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #EB673A;
+            font-weight: 600;
+        }
+
+        .footer-section p, .footer-section a {
+            font-size: 14px;
+            color: #CCCCCC;
+            margin-bottom: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+            font-weight: 300;
+        }
+
+        .footer-section a:hover {
+            color: #EB673A;
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(235, 103, 58, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #EB673A;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: 0;
+        }
+
+        .social-links a:hover {
+            background: #EB673A;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .prototype {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 40px;
+            }
+
+            .prototype:nth-child(even) {
+                grid-template-columns: 1fr;
+            }
+
+            .prototype:nth-child(even) .prototype-media,
+            .prototype:nth-child(even) .prototype-content {
+                order: initial;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                gap: 20px;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .navbar-logo {
+                height: 40px;
+            }
+
+            .main {
+                width: calc(100% - 32px);
+                padding: 100px 16px 40px;
+            }
+
+            .page-header h1 {
+                font-size: 44px;
+            }
+
+            .page-header p {
+                font-size: 16px;
+            }
+
+            .category-tabs {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .tab-button {
+                width: 100%;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .prototype {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 30px;
+            }
+
+            .prototype-content h3 {
+                font-size: 28px;
+            }
+
+            .prototype-content ul {
+                padding-left: 20px;
+            }
+
+            .hotspot::before {
+                left: 10px;
+                top: 10px;
+                width: 120px;
+                height: 120px;
+            }
+
+            .footer {
+                padding: 60px 20px 30px;
+            }
+
+            .footer-content {
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .prototype {
+                padding: 20px;
+            }
+
+            .prototype-content h3 {
+                font-size: 24px;
+            }
+
+            .prototype-content ul li {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html">
+            <img src="DPX_logo_recortado.png" alt="DPx Logo" class="navbar-logo">
+        </a>
+        <ul class="nav-links">
+            <li><a href="company.html">Company</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main class="main">
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Our <span>Projects</span></h1>
+            <p>Revolutionary power conversion solutions engineered to transform data center infrastructure and redefine the future of energy delivery.</p>
+        </section>
+
+        <!-- Category Tabs -->
+        <div class="category-tabs">
+            <button class="tab-button active" data-tab="dc-dc">DC-DC Converters</button>
+            <button class="tab-button" data-tab="dc-loads">DC Loads</button>
+        </div>
+
+        <!-- DC-DC Converters Section -->
+        <section id="dc-dc" class="content-section active">
+            <!-- Hero Section with DPx Law -->
+            <section class="hero-section" aria-label="DPx's law interactive diagram">
+                <h2 class="hero-section-title"><span>DC-DC</span> Converters</h2>    
+                
+                <p class="hero-description">
+                    The DPx Law showcases our evolution from our founding in 2019, when we first demonstrated our patented technology through a small prototype, to the kiloampere-level converters we have successfully achieved today.
+                </p>
+                <div class="hero-container">
+                    <div class="hero">
+                        <img src="DPxLaw4.png" alt="DPx's law - Interactive Prototype Guide">
+                        <a href="#prototype-1" class="hotspot" data-image="Proof_concept.png" style="left: 13.75%; top: 77%; --size: 30px;" title="Proof of Concept - 60A"></a>
+                        <a href="#prototype-2" class="hotspot" data-image="UFO.PNG" style="left: 23.9%; top: 70.05%; --size: 30px;" title="UFO - 100A"></a>
+                        <a href="#prototype-3" class="hotspot" data-image="Animal.PNG" style="left: 33.85%; top: 63.15%; --size: 30px;" title="The Animal - 200A"></a>
+                        <a href="#prototype-4" class="hotspot" data-image="Matrix.PNG" style="left: 43.7%; top: 54.6%; --size: 30px;" title="Matrix - 500A"></a>
+                        <a href="#prototype-5" class="hotspot" data-image="Split.PNG" style="left: 53.65%; top: 48%; --size: 30px;" title="Split - 1000A"></a>
+                        <a href="#prototype-6" class="hotspot" data-image="Emerald.png" style="left: 63.6%; top: 41%; --size: 30px;" title="Emerald - 2000A"></a>
+                        <a href="#prototype-7" class="hotspot" data-image="Onyx1.PNG" style="left: 73.3%; top: 35%; --size: 30px;" title="Onyx - 4000A"></a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Prototypes Section -->
+            <section class="prototypes-section">
+                <div class="prototypes-header">
+                    <h2 class="section-title">Prototypes</h2>
+                </div>
+
+                <section class="prototype-list" aria-label="Prototype list">
+
+                    <!-- Prototype 1 -->
+                    <article class="prototype" id="prototype-1" data-aos="slide-left">
+                        <div class="prototype-media">
+                            <img src="Proof_Concept1.png" alt="48V DC-DC Converter prototype - Proof of Concept">
+                        </div>
+                        <div class="prototype-content">
+                            <h3>Proof of Concept</h3>
+                            <p><strong>Entry-Level Power Conversion</strong></p>
+                            <ul>
+                                <li>Input Voltage: 48V</li>
+                                <li>Output Voltage: 12V</li>
+                                <li>Output Current: 5A</li>
+                                <li>Efficiency: 90%</li>
+                                <li>Form Factor: Modular Design</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- Prototype 2 -->
+                    <article class="prototype" id="prototype-2" data-aos="slide-right">
+                        <div class="prototype-media">
+                            <img src="UFO.PNG" alt="24V DC-DC Converter prototype - UFO">
+                        </div>
+                        <div class="prototype-content">
+                            <h3>UFO</h3>
+                            <p><strong>Compact & Efficient</strong></p>
+                            <ul>
+                                <li>Input Voltage: 24V</li>
+                                <li>Output Voltage: 5V</li>
+                                <li>Output Current: 3A</li>
+                                <li>Efficiency: 92%</li>
+                                <li>Thermal Management: Enhanced</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- Prototype 3 -->
+                    <article class="prototype" id="prototype-3" data-aos="slide-left">
+                        <div class="prototype-media">
+                            <img src="Animal.PNG" alt="12V DC-DC Converter prototype - The Animal">
+                        </div>
+                        <div class="prototype-content">
+                            <h3>The Animal</h3>
+                            <p><strong>Robust Performance</strong></p>
+                            <ul>
+                                <li>Input Voltage: 12V</li>
+                                <li>Output Voltage: 5V</li>
+                                <li>Output Current: 2A</li>
+                                <li>Efficiency: 88%</li>
+                                <li>Protection: Multi-Layer</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- Prototype 4 -->
+                    <article class="prototype" id="prototype-4" data-aos="slide-right">
+                        <div class="prototype-media">
+                            <img src="Matrix.PNG" alt="24V DC-DC Converter prototype - Matrix">
+                        </div>
+                        <div class="prototype-content">
+                            <h3>Matrix</h3>
+                            <p><strong>Advanced Technology Stack</strong></p>
+                            <ul>
+                                <li>Input Voltage: 24V</li>
+                                <li>Output Voltage: 5V</li>
+                                <li>Output Current: 3A</li>
+                                <li>Efficiency: 92%</li>
+                                <li>Smart Control: AI-Ready</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- Prototype 5 -->
+                    <article class="prototype" id="prototype-5" data-aos="slide-left">
+                        <div class="prototype-media">
+                            <img src="Split.PNG" alt="12V DC-DC Converter prototype - Split">
+                        </div>
+                        <div class="prototype-content">
+                            <h3>Split</h3>
+                            <p><strong>Dual-Output Innovation</strong></p>
+                            <ul>
+                                <li>Input Voltage: 12V</li>
+                                <li>Output Voltage: 5V</li>
+                                <li>Output Current: 2A</li>
+                                <li>Efficiency: 88%</li>
+                                <li>Parallel Capable: Yes</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- Prototype 6 -->
+                    <article class="prototype" id="prototype-6" data-aos="slide-right">
+                        <div class="prototype-media">
+                            <img src="Emerald.png" alt="12V DC-DC Converter prototype - Emerald">
+                        </div>
+                        <div class="prototype-content">
+                            <h3>Emerald</h3>
+                            <p><strong>Premium Efficiency Class</strong></p>
+                            <ul>
+                                <li>Input Voltage: 12V</li>
+                                <li>Output Voltage: 5V</li>
+                                <li>Output Current: 2A</li>
+                                <li>Efficiency: 88%</li>
+                                <li>Lifespan: Extended Rating</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- Prototype 7 -->
+                    <article class="prototype" id="prototype-7" data-aos="slide-left">
+                        <div class="prototype-media">
+                            <img src="Onyx3.PNG" alt="12V DC-DC Converter prototype - Onyx">
+                        </div>
+                        <div class="prototype-content">
+                            <h3>Onyx</h3>
+                            <p><strong>Flagship Solution</strong></p>
+                            <ul>
+                                <li>Input Voltage: 12V</li>
+                                <li>Output Voltage: 5V</li>
+                                <li>Output Current: 2A</li>
+                                <li>Efficiency: 88%</li>
+                                <li>Integration: Enterprise-Ready</li>
+                            </ul>
+                        </div>
+                    </article>
+                </section>
+            </section>
+        </section>
+
+        <!-- DC Loads Section -->
+     <section id="dc-loads" class="content-section">
+            <div class="prototypes-section">
+                <div class="prototypes-header">
+                    <h2 class="section-title"><span>DC</span> Loads</h2>
+                </div>
+        
+                <section class="prototype-list" aria-label="DC Loads list">
+        
+                    <!-- Load 1 -->
+                    <article class="prototype" id="load-1" data-aos="slide-left">
+                        <div class="prototype-media">
+                            <img src="Load1.png" alt="DC Load prototype 1">
+                        </div>
+                        <div class="prototype-content">
+                            <h3>Load 1</h3>
+                            <p><strong>High Power Dissipation</strong></p>
+                            <ul>
+                                <li>Input Voltage: 48V</li>
+                                <li>Power Rating: 10kW</li>
+                                <li>Current: 200A</li>
+                                <li>Control: Digital PWM</li>
+                                <li>Efficiency: 98%</li>
+                            </ul>
+                        </div>
+                    </article>
+        
+                    <!-- Load 2 -->
+                    <article class="prototype" id="load-2" data-aos="slide-right">
+                        <div class="prototype-media">
+                            <img src="Load2.png" alt="DC Load prototype 2">
+                        </div>
+                        <div class="prototype-content">
+                            <h3>Load 2</h3>
+                            <p><strong>Programmable Testing Unit</strong></p>
+                            <ul>
+                                <li>Input Voltage: 24V</li>
+                                <li>Power Rating: 5kW</li>
+                                <li>Current: 150A</li>
+                                <li>Features: Multi-Mode</li>
+                                <li>Efficiency: 97%</li>
+                            </ul>
+                        </div>
+                    </article>
+        
+                </section>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About DPx</h3>
+                <!-- <p>Differential Power is your technology partner for revolutionizing energy delivery in next-generation infrastructure.</p> -->
+                <div class="social-links">
+                    <a href="https://es.linkedin.com/company/differential-power-s-l" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="company.html">Company</a>
+                <a href="projects.html">Projects</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p> <a href="mailto:diffpower@differentialpower.com">📧 diffpower@differentialpower.com</a></p>
+                <p> <a href="https://www.google.com/maps/search/Playa+de+Riazor+12,+Madrid,+Spain,+28042" target="_blank">📍 Madrid, Spain</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Differential Power (DPx). All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons and sections
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding section
+                this.classList.add('active');
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Asignar imagen a cada hotspot según data-image
+        document.querySelectorAll('.hotspot').forEach(hotspot => {
+            const imageName = hotspot.getAttribute('data-image');
+            hotspot.style.setProperty('--bg-image', `url('${imageName}')`);
+        });
+
+        // Smooth scroll to prototypes
+        document.querySelectorAll('.hotspot').forEach(hotspot => {
+            hotspot.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const target = document.querySelector(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        });
+
+        AOS.init({
+            duration: 1200,
+            offset: 500,
+            once: false
+        });
+    </script>
+
+</body>
+</html>
